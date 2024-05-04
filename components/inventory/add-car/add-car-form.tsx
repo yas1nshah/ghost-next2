@@ -380,7 +380,7 @@ const AddCarForm = ({isTeam}: {isTeam: boolean}) => {
         <FormError message={error}/>
         <FormSuccess message={success}/>
 
-        {isPending && (<Button
+        {!isPending && (<Button
         type='submit'
         >
           Post Car
