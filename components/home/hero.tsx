@@ -17,6 +17,7 @@ import {
 
 function Hero() {
     const images = [
+        "/media/covers/cover3.png",
         "/media/covers/cover1.webp",
         "/media/covers/cover2.webp",
     ];
