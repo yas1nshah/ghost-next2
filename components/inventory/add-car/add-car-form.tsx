@@ -80,7 +80,33 @@ const AddCarForm = ({isTeam}: {isTeam: boolean}) => {
     const files = e.target.files;
 
     // Restrict file types to images (you can customize this further)
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/heif', 'image/heic', 'image/bmp', 'image/webp'];
+    const allowedTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/gif',
+      'image/webp',
+      'image/tiff',
+      'image/bmp',
+      'image/svg+xml', // SVG images
+      'image/vnd.microsoft.icon', // ICO (icon) images
+      'image/vnd.adobe.photoshop', // PSD (Photoshop) files
+      'image/x-icon', // Icon files
+      'image/x-xcf', // GIMP files
+      'image/x-pcx', // PCX images
+      'image/x-tga', // TGA images
+      'image/x-exr', // OpenEXR images
+      'image/x-dds', // DDS images
+      'image/x-cmu-raster', // RAS images
+      'image/x-portable-anymap', // PNM (Portable Anymap) images
+      'image/x-portable-bitmap', // PBM (Portable Bitmap) images
+      'image/x-portable-graymap', // PGM (Portable Graymap) images
+      'image/x-portable-pixmap', // PPM (Portable Pixmap) images
+      'image/x-sgi', // SGI images
+      'image/x-xbitmap', // XBM (X BitMap) images
+      'image/x-xpixmap', // XPM (X PixMap) images
+      'image/vnd.wap.wbmp', // WBMP (Wireless Bitmap) images
+    ];
+    
     if(files)
     {
 
@@ -90,8 +116,8 @@ const AddCarForm = ({isTeam}: {isTeam: boolean}) => {
     
 
     // Ensure that the total number of selected files is not more than 5
-    if (selectedFiles.length + gallery.length > 5) {
-        alert('You can only select up to 5 images.');
+    if (selectedFiles.length + gallery.length > 10) {
+        alert('You can only select up to 10 images.');
         return;
     }
 
@@ -169,18 +195,21 @@ const AddCarForm = ({isTeam}: {isTeam: boolean}) => {
   async function saveImages(gallery:any, newCar:any, id:any) {
     for (let index = 0; index < gallery.length; index++) {
         console.log("IMAGE");
-        setSuccess(`Uploading Image ${index+1}`);
+        setSuccess(`Preparing Image ${index+1}`);
         const image = gallery[index];
         const makeModelYear = `${newCar.make}-${newCar.model}-${newCar.year}`; // Assuming make and model are available
         const imageName = `${makeModelYear}-${id}-${index}.webp`;
+        setSuccess(`Prepared Image ${index+1}`);
         const data = new FormData();
         data.append('img', new File([image], imageName, { type: image.type }));
 
         try {
+            setSuccess(`Uploading Image ${index+1}`);
             const result = await saveDocumentInteraction(data);
             setError(result.error ? result.error + index : '');
             setSuccess(result.success ? result.success + index : '');
             console.log("POSTED");
+            setSuccess(`Posted ${index+1}`);
         } catch (error) {
             console.error('Error saving image:', error);
         }
