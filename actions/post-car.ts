@@ -44,9 +44,10 @@ export const postCar = async (values : z.infer<typeof CarSchema>) => {
                 ref: validatedFields.data.ref
 
             }
-        })
+        });
+        const id = await car.id;
 
-        return  {success: "Car Posted", newId: car.id}
+        return  {success: "Car Posted", newId: id}
     }
     catch (error)
     {
