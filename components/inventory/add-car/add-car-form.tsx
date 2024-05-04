@@ -185,16 +185,20 @@ const compressAndConvertToWebP = async (imageFile: File): Promise<Blob> => {
   const saveImages = async (gallery: Blob[], newCar: CarFinal, id: string) => {
     for (let index = 0; index < gallery.length; index++) {
       try {
-        setSuccess(`Uploading Image ${index + 1}`);
+        setSuccess(`Preparing Image ${index + 1}`);
         const image = gallery[index];
         const makeModelYear = `${newCar.make}-${newCar.model}-${newCar.year}`;
         const imageName = `${makeModelYear}-${id}-${index}.webp`;
         const data = new FormData();
         data.append('img', new File([image], imageName, { type: 'image/webp' }));
-  
-        const result = await saveDocumentInteraction(data);
-        setError(result.error ? result.error + index : '');
-        setSuccess(result.success ? result.success + index : '');
+        var requestOptions = {method: 'POST', body: data };
+
+        const response = await fetch("/meddia/upload", requestOptions);
+        const result = await response.text();
+        setSuccess(`Uploading Image ${index + 1}`);
+        // const result = await saveDocumentInteraction(data);
+        // setError(result.error ? result.error + index : '');
+        setSuccess(result);
         console.log(`Image ${index + 1} uploaded successfully.`);
       } catch (error) {
         console.error('Error saving image:', error);
