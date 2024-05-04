@@ -166,48 +166,26 @@ const AddCarForm = ({isTeam}: {isTeam: boolean}) => {
 
 
 
- async function saveImages(gallery:any, newCar:any, id:any) {
-    try {
+  async function saveImages(gallery:any, newCar:any, id:any) {
+    for (let index = 0; index < gallery.length; index++) {
+        console.log("IMAGE");
+        setSuccess(`Uploading Image ${index+1}`);
+        const image = gallery[index];
         const makeModelYear = `${newCar.make}-${newCar.model}-${newCar.year}`; // Assuming make and model are available
+        const imageName = `${makeModelYear}-${id}-${index}.webp`;
+        const data = new FormData();
+        data.append('img', new File([image], imageName, { type: image.type }));
 
-        // Loop through each image in the gallery
-        for (let index = 0; index < gallery.length; index++) {
-            const image = gallery[index];
-            const imageName = `${makeModelYear}-${id}-${index}.webp`;
-
-            // Create a new FormData object
-            const data = new FormData();
-            data.append('img', image, imageName); // Append the image directly with its name
-
-            // Use fetch API to send the image data to the server
-            const response = await fetch('/api/saveImage', {
-                method: 'POST',
-                body: data,
-            });
-
-            // Check the response status
-            if (!response.ok) {
-                throw new Error(`Failed to save image ${imageName}`);
-            }
-
-            // Extract and handle the server response if needed (assuming JSON response)
-            const result = await response.json();
-
-            // Update UI based on server response
-            if (result.error) {
-                console.error(`Error saving image ${imageName}: ${result.error}`);
-                // Handle error state in UI (e.g., display error message)
-            } else if (result.success) {
-                console.log(`Image ${imageName} saved successfully`);
-                // Handle success state in UI (e.g., display success message)
-            }
+        try {
+            const result = await saveDocumentInteraction(data);
+            setError(result.error ? result.error + index : '');
+            setSuccess(result.success ? result.success + index : '');
+            console.log("POSTED");
+        } catch (error) {
+            console.error('Error saving image:', error);
         }
-    } catch (error) {
-        console.error('Error saving images:', error);
-        // Handle overall error (e.g., display general error message)
     }
 }
-
 
   const onSubmit =  (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Prevent the default form submission behavior
