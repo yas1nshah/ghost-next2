@@ -204,8 +204,14 @@ const AddCarForm = ({isTeam}: {isTeam: boolean}) => {
               setError(data.error);
               setSuccess(data.success);
               setNewCar({...newCar, id: data.newId as string})
-              if(data.newId)
-              await saveImages(gallery, newCar, data.newId);
+              if(data.newId){
+                setSuccess("Uploading Images");
+                await saveImages(gallery, newCar, data.newId);
+              }
+              else{
+                setError("Failed to upload Image");
+                return
+              }
               // await uploadImages(data.newId);
             }).then(()=>router.replace("/account"))  
     });
@@ -374,11 +380,11 @@ const AddCarForm = ({isTeam}: {isTeam: boolean}) => {
         <FormError message={error}/>
         <FormSuccess message={success}/>
 
-        <Button
+        {isPending && (<Button
         type='submit'
         >
           Post Car
-        </Button>
+        </Button>)}
         </form>
 
     </div>

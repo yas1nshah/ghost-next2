@@ -14,9 +14,9 @@ const BottomNavbar = () => {
   return (
     
     <nav>
-        <ul className='fixed  w-full left-0 bottom-0 bg-card backdrop-blur-lg flex justify-between p-1 list-none z-20 md:hidden '>
+        <ul className='fixed  w-full left-0 bottom-0 bg-card backdrop-blur-lg flex justify-between p-1 list-none z-20 md:hidden pb-5'>
             
-                <Link className='w-1/5' href={'/'}>
+                <Link className='w-1/5 ' href={'/'}>
                     <div className='text-center'>
                         <Button variant={'ghost'} size={'sm'} className={`${(path === '/') && "bg-white/30"}`}>
                             <HomeIcon className='h-6 w-6'/>
