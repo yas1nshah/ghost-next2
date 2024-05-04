@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 const PoweredBy = () => {
   return (
-    <div className='m-4 max-w-6xl '>
+    <div className='m-4 max-w-6xl mx-auto'>
       <h2 className="text-sm font-semibold">Featuring:</h2>
       <div className='flex gap-4 flex-wrap md:flex-nowrap'>
         <div className="overflow-clip rounded-xl bg-card h-20 md: w-24 w-1/4 flex items-center justify-center">

@@ -74,89 +74,79 @@ const AddCarForm = ({isTeam}: {isTeam: boolean}) => {
     ref: "none"
 })
 
+const compressAndConvertToWebP = async (imageFile: File): Promise<Blob> => {
+  const img = await createImageBitmap(imageFile);
+  const canvas = document.createElement('canvas');
+  canvas.width = img.width;
+  canvas.height = img.height;
+  const ctx = canvas.getContext('2d');
+  ctx?.drawImage(img, 0, 0);
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => {
+      resolve(blob as Blob);
+    }, 'image/webp', 0.7); // Convert to WebP format with quality 0.7 (adjust as needed)
+  });
+};
 
+
+  const allowedTypes = [
+    'image/jpeg',
+    'image/png',
+    'image/gif',
+    'image/webp',
+    'image/tiff',
+    'image/bmp',
+    'image/svg+xml', // SVG images
+    'image/vnd.microsoft.icon', // ICO (icon) images
+    'image/vnd.adobe.photoshop', // PSD (Photoshop) files
+    'image/x-icon', // Icon files
+    'image/x-xcf', // GIMP files
+    'image/x-pcx', // PCX images
+    'image/x-tga', // TGA images
+    'image/x-exr', // OpenEXR images
+    'image/x-dds', // DDS images
+    'image/x-cmu-raster', // RAS images
+    'image/x-portable-anymap', // PNM (Portable Anymap) images
+    'image/x-portable-bitmap', // PBM (Portable Bitmap) images
+    'image/x-portable-graymap', // PGM (Portable Graymap) images
+    'image/x-portable-pixmap', // PPM (Portable Pixmap) images
+    'image/x-sgi', // SGI images
+    'image/x-xbitmap', // XBM (X BitMap) images
+    'image/x-xpixmap', // XPM (X PixMap) images
+    'image/vnd.wap.wbmp', // WBMP (Wireless Bitmap) images
+  ];
   // ? Gallery
-  const handleFileChange = async (e : React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-
-    // Restrict file types to images (you can customize this further)
-    const allowedTypes = [
-      'image/jpeg',
-      'image/png',
-      'image/gif',
-      'image/webp',
-      'image/tiff',
-      'image/bmp',
-      'image/svg+xml', // SVG images
-      'image/vnd.microsoft.icon', // ICO (icon) images
-      'image/vnd.adobe.photoshop', // PSD (Photoshop) files
-      'image/x-icon', // Icon files
-      'image/x-xcf', // GIMP files
-      'image/x-pcx', // PCX images
-      'image/x-tga', // TGA images
-      'image/x-exr', // OpenEXR images
-      'image/x-dds', // DDS images
-      'image/x-cmu-raster', // RAS images
-      'image/x-portable-anymap', // PNM (Portable Anymap) images
-      'image/x-portable-bitmap', // PBM (Portable Bitmap) images
-      'image/x-portable-graymap', // PGM (Portable Graymap) images
-      'image/x-portable-pixmap', // PPM (Portable Pixmap) images
-      'image/x-sgi', // SGI images
-      'image/x-xbitmap', // XBM (X BitMap) images
-      'image/x-xpixmap', // XPM (X PixMap) images
-      'image/vnd.wap.wbmp', // WBMP (Wireless Bitmap) images
-    ];
-    
-    if(files)
-    {
-
-      const selectedFiles = Array.from(files).filter(file =>
-        allowedTypes.includes(file.type)
-        );
-    
-
-    // Ensure that the total number of selected files is not more than 5
-    if (selectedFiles.length + gallery.length > 10) {
-        alert('You can only select up to 10 images.');
-        return;
-    }
-
-    // Define a function to compress and convert an image to WebP format
-    const compressAndConvertToWebP = (imageFile: File) => {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = function (event) {
-                const img = new Image();
-                img.src = event.target?.result as string;
-                img.onload = function () {
-                    const canvas = document.createElement('canvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    ctx?.drawImage(img, 0, 0);
-                    canvas.toBlob(blob => {
-                        // Returning the blob directly
-                        resolve(blob);
-                    }, 'image/webp', 0.7); // Convert to WebP format with quality 0.7 (adjust as needed)
-                };
-            };
-            reader.readAsDataURL(imageFile);
-        });
-    };
-
-    // Compress and convert each selected image to WebP format
-    const compressedImages = await Promise.all(selectedFiles.map(async (file) => {
-        return await compressAndConvertToWebP(file);
-    }));
   
-
-    // Update the gallery state with the compressed images
-    setGallery((prevGallery: Blob[]) => [...prevGallery, ...compressedImages] as Blob[]);
-    // const newGallery: string[] = gallery.map((_, index) => `${newCar.make}-${newCar.model}-${newCar.year}-<ID>-${index}`);
-    // setNewCar({...newCar, gallery: newGallery})
-
-  }
+    if (!files || files.length === 0) {
+      return;
+    }
+  
+    const selectedFiles = Array.from(files).filter((file) =>
+      allowedTypes.includes(file.type)
+    );
+  
+    if (selectedFiles.length === 0) {
+      alert('Please select valid image files.');
+      return;
+    }
+  
+    // Ensure that the total number of selected files is not more than 10
+    if (selectedFiles.length + gallery.length > 10) {
+      alert('You can only select up to 10 images.');
+      return;
+    }
+  
+    const compressedImages = await Promise.all(
+      selectedFiles.map(async (file) => {
+        return await compressAndConvertToWebP(file);
+      })
+    );
+  
+    setGallery((prevGallery) => [...prevGallery, ...compressedImages]);
   };
+  
 
   useEffect(() => {
     const newGallery: string[] = gallery.map((_, index) => `${newCar.make}-${newCar.model}-${newCar.year}-<ID>-${index}`);
@@ -192,64 +182,59 @@ const AddCarForm = ({isTeam}: {isTeam: boolean}) => {
 
 
 
-  async function saveImages(gallery:any, newCar:any, id:any) {
+  const saveImages = async (gallery: Blob[], newCar: CarFinal, id: string) => {
     for (let index = 0; index < gallery.length; index++) {
-        console.log("IMAGE");
-        setSuccess(`Preparing Image ${index+1}`);
+      try {
+        setSuccess(`Uploading Image ${index + 1}`);
         const image = gallery[index];
-        const makeModelYear = `${newCar.make}-${newCar.model}-${newCar.year}`; // Assuming make and model are available
+        const makeModelYear = `${newCar.make}-${newCar.model}-${newCar.year}`;
         const imageName = `${makeModelYear}-${id}-${index}.webp`;
-        setSuccess(`Prepared Image ${index+1}`);
         const data = new FormData();
-        data.append('img', new File([image], imageName, { type: image.type }));
-
-        try {
-            setSuccess(`Uploading Image ${index+1}`);
-            const result = await saveDocumentInteraction(data);
-            setError(result.error ? result.error + index : '');
-            setSuccess(result.success ? result.success + index : '');
-            console.log("POSTED");
-            setSuccess(`Posted ${index+1}`);
-        } catch (error) {
-            console.error('Error saving image:', error);
-        }
+        data.append('img', new File([image], imageName, { type: 'image/webp' }));
+  
+        const result = await saveDocumentInteraction(data);
+        setError(result.error ? result.error + index : '');
+        setSuccess(result.success ? result.success + index : '');
+        console.log(`Image ${index + 1} uploaded successfully.`);
+      } catch (error) {
+        console.error('Error saving image:', error);
+        setError(`Error saving image ${index + 1}`);
+      }
     }
-}
-
-  const onSubmit =  (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-
-    setError("");
-    setSuccess("");
-    
-    if(newCar.make === '' && newCar.model ==='' && newCar.location=='' && newCar.registration ==''){
-      setError("Please fill out all the fields");
-      return
+  };
+  
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  
+    setError('');
+    setSuccess('');
+  
+    if (!newCar.make || !newCar.model || !newCar.location || !newCar.registration) {
+      setError('Please fill out all required fields.');
+      return;
     }
-
+  
     startTransition(async () => {
-        postCar(newCar)
-            .then(async (data) => {
-          
-              setError(data.error);
-              setSuccess(data.success);
-              setNewCar({...newCar, id: data.newId as string})
-              if(data.newId){
-                setSuccess("Uploading Images");
-                await saveImages(gallery, newCar, data.newId);
-              }
-              else{
-                setError("Failed to upload Image");
-                return
-              }
-              // await uploadImages(data.newId);
-            }).then(()=>router.replace("/account"))  
+      try {
+        const data = await postCar(newCar);
+        setSuccess('Car information saved successfully.');
+  
+        if (data.newId) {
+          setSuccess('Uploading Images...');
+          await saveImages(gallery, newCar, data.newId);
+          setSuccess('Images uploaded successfully.');
+        } else {
+          setError('Failed to upload images.');
+        }
+  
+        router.replace('/account');
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        setError('An error occurred while submitting the form.');
+      }
     });
-
-    
-    
-}
-
+  };
+  
 
   return (
     <div className='space-y-6 my-6'>
