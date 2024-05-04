@@ -41,6 +41,7 @@ export const postCar = async (values : z.infer<typeof CarSchema>) => {
                 sellerComments: validatedFields.data.sellerComments,
                 transmission: validatedFields.data.transmission,
                 sellerID: session.user.id as string,
+                ref: validatedFields.data.ref
 
             }
         })

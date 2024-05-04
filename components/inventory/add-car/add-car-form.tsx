@@ -38,7 +38,7 @@ interface FileBlob extends Readable {
   name: string;
 }
 
-const AddCarForm = () => {
+const AddCarForm = ({isTeam}: {isTeam: boolean}) => {
   const [isPending, startTransition] =  useTransition()
   const router = useRouter()
 
@@ -71,6 +71,7 @@ const AddCarForm = () => {
     sellerID: "",
 
     sellerComments: "",
+    ref: "none"
 })
 
 
@@ -346,11 +347,29 @@ const AddCarForm = () => {
             </div>
         </div>
 
-        {/* Select Color */}
+        {/* Seller Comments */}
         <div className='relative w-full'>
               <span className='label-text-alt'>Seller Comments</span>
               <Textarea onChange={(e)=>setNewCar({...newCar, sellerComments : e.target.value})} placeholder="Type your message here." />
         </div>
+
+        {/* Select REF */}
+        { isTeam &&
+          <div className='relative w-full'>
+              <span className='label-text-alt'>Ref</span>
+              <Input
+                type='text'
+                placeholder='Enter Ref'
+                className='text-lg'
+                value={newCar.ref? newCar.ref : "None" }
+                onChange={(e)=>{
+                  setNewCar({...newCar, ref: e.target.value})
+                }}
+              />
+              <p className='label-text-alt mb-4 mt-2 text-end'>{newCar.mileage.toLocaleString() } km </p>
+
+        </div>}
+
         
         <FormError message={error}/>
         <FormSuccess message={success}/>

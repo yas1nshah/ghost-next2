@@ -195,7 +195,24 @@ const CarDetailPreview =  ( params : { car:any} ) => {
                         </div>
                         
                     </div>
-        
+                    
+                    <div className="space-y-2 py-2">
+                            <div className='bg-card rounded-xl p-4 mb-4'>
+                                <h4>{car.seller?.name}</h4>
+                            </div>
+                            <Link target='_blank' href={`https://wa.me/92${car.seller?.phone}?text=Hello%2C%20I%20am%20interedted%20in%20your%20Ad%20for%20${car.title}.%20https://ghostprotocols.pk/inventory/-/${car.id}`}>
+                                <Button className='w-full' variant={'outline'}>
+                                Seller Phone
+                                </Button>
+                            </Link>
+
+                            <div className='bg-card rounded-xl p-4'>
+                                <h4>  <span className="font-normal">Ref: </span>{car.ref}</h4>
+                            </div>
+
+                            
+                            
+                        </div>
                     
                 </div>
             </div>

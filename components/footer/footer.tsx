@@ -103,14 +103,14 @@ const Footer = () => {
                 <div className="my-4">
                     <h2 className="footer-head">Ghost App</h2>
                     <div className="flex gap-4 md:flex-col md:gap-1 flex-row">
-                        <Link href="" className="bg-card p-2 my-4 md:my-1 rounded-xl flex gap-4 md:max-w-44">
+                        <Link href="/app" className="bg-card p-2 my-4 md:my-1 rounded-xl flex gap-4 md:max-w-44">
                             <i className="icon invert dark:invert-0" style={{backgroundPosition: '-30px -30px'}}></i>
                             <div>
                             <p className="text-xs"> Download on the</p>
                             <h6 className="text-base font-semibold">App Store</h6>
                             </div>
                         </Link>
-                        <Link href="" className="bg-card p-2 my-4 md:my-1 rounded-xl flex gap-4 md:max-w-44">
+                        <Link href="/app" className="bg-card p-2 my-4 md:my-1 rounded-xl flex gap-4 md:max-w-44">
                             <i className="icon" style={{backgroundPosition: '0 -30px'}}></i>
                             <div>
                             <p className="text-xs"> Get it on</p>

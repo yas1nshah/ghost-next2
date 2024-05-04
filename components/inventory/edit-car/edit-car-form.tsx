@@ -32,7 +32,7 @@ interface FileBlob extends Readable {
   name: string;
 }
 
-const EditCarForm = ({result}: any) => {
+const EditCarForm = ({result, isTeam}: any) => {
   const {car, seller}: {car: any, seller:any} = result;
   const [isPending, startTransition] =  useTransition()
   const router = useRouter()
@@ -66,6 +66,7 @@ const EditCarForm = ({result}: any) => {
 
     sellerID: car.sellerID || '',
     sellerComments: car.sellerComments || '',
+    ref: car.ref || 'none',
 });
 
   
@@ -414,6 +415,23 @@ const EditCarForm = ({result}: any) => {
         
         <FormError message={error}/>
         <FormSuccess message={success}/>
+
+        {/* Select REF */}
+        { isTeam &&
+          <div className='relative w-full'>
+              <span className='label-text-alt'>Ref</span>
+              <Input
+                type='text'
+                placeholder='Enter Ref'
+                className='text-lg'
+                value={newCar.ref? newCar.ref : "None" }
+                onChange={(e)=>{
+                  setNewCar({...newCar, ref: e.target.value})
+                }}
+              />
+              <p className='label-text-alt mb-4 mt-2 text-end'>{newCar.mileage.toLocaleString() } km </p>
+
+        </div>}
 
         <Button
         type='submit'

@@ -156,18 +156,9 @@ const DetailingPage = () => {
             </AccordionItem>
         </Accordion>
 
-        <div className='flex justify-center'>
-      <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27219.495010918075!2d74.30332373860652!3d31.484673398326468!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391904106691c4c7%3A0xfb24ddaf1e7bc6c2!2sModel%20Town%2C%20Lahore%2C%20Punjab%2C%20Pakistan!5e0!3m2!1sen!2s!4v1714774911791!5m2!1sen!2s"
-        width="600"
-        height="450"
-        style={{ border: 0 }}
-        className='w-full h-44 rounded-xl'
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        title="Google Map"
-      ></iframe>
-    </div>
+        <div className='p-4 rounded-xl bg-card'>
+          <p> <strong>Location:</strong> Door to Door Service</p>
+        </div>
     </div>
     
   )

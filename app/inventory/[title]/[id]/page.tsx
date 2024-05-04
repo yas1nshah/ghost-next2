@@ -15,6 +15,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import ToolTip from '@/components/car-details/tooltip'
 import BottomBar from '@/components/car-details/bottom-bar'
+import { auth } from '@/auth'
 
 
 
@@ -35,7 +36,7 @@ export async function generateMetadata(
   
 
 const CarDetailsPage = async ({ params }: { params: { title: string , id : string} }) => {
- 
+    const session = await auth()
     const {car, seller} = await getCarDetails(params.id)
 
 
@@ -219,11 +220,17 @@ const CarDetailsPage = async ({ params }: { params: { title: string , id : strin
                                 Seller Phone
                                 </Button>
                             </Link>
-                            <Link target='_blank' href={`https://wa.me/16232741046?text=p/BTFM%20${car.title}.%20https://ghostprotocols.pk/inventory/-/${car.id}`}>
+                            <Link  target='_blank' href={`https://wa.me/16232741046?text=p/BTFM%20${car.title}.%20https://ghostprotocols.pk/inventory/-/${car.id}`}>
                                 <Button className='w-full'>
                                     Buy it For Me
                                 </Button>
                             </Link>
+                            <div className="my-2 p-4 bg-card rounded-xl">
+                                {
+                                    (session?.user?.role === "TEAM" )|| (session?.user?.role === "ADMIN") &&
+                                    car.ref
+                                }
+                            </div>
                         </div>
                     </div>
         

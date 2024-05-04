@@ -2,6 +2,7 @@
 import React from 'react'
 import AddCarForm from '@/components/inventory/add-car/add-car-form'
 import Link from 'next/link'
+import { auth } from '@/auth';
 
 export const metadata = {
   title: "Add Car Form - Ghost Protocols",
@@ -9,7 +10,8 @@ export const metadata = {
 
 };
 
-const AddCarPage = () => {
+const AddCarPage = async () => {
+  const session = await auth();
   return (
     <div>
        <div className="m-2">
@@ -24,7 +26,7 @@ const AddCarPage = () => {
         </div>
         <hr/>
       </div>
-        <AddCarForm/>
+        <AddCarForm isTeam={(session?.user?.role === "ADMIN") || (session?.user?.role === "TEAM")? true : false}/>
     </div>
   )
 }

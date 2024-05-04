@@ -12,8 +12,24 @@ export async function getRecentCars(page: number) {
         const cars = await db.car.findMany({
             orderBy: { date: 'desc' },
             skip: starting_index,
-            take: items_per_page
-        });
+            take: items_per_page,
+            include: {
+              seller: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true,
+                  phone: true,
+                  address: true,
+                  dealer: true,
+                  ad_limit: true,
+                  featured_limit: true,
+                  date_joined: true
+                }
+              }
+            }
+          });
+          
   
         return cars;
   

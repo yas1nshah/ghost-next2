@@ -33,7 +33,7 @@ const EditCarPage = async ({params}:{params: {id:string}}) => {
           <hr/>
         </div>
         
-        <EditCarForm result ={car} />
+        <EditCarForm result ={car} isTeam={(session?.user?.role === "ADMIN") || (session?.user?.role === "TEAM")? true : false} />
     </div>
   )
 }

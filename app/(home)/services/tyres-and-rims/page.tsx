@@ -65,6 +65,9 @@ const DetailingPage = () => {
             
            
         </Accordion>
+        <div className='p-4 rounded-xl bg-card'>
+          <p> Available Online <strong> <Link href={"https://naperformance.pk"}>@naperformance.pk</Link> </strong></p>
+        </div>
 
 
    

@@ -52,6 +52,8 @@ export const CarSchema = z.object( {
 
     sellerID: z.string(),
     sellerComments :  z.string(),
+
+    ref: z.string().nullable()
 })
 
 export type CarFinal = z.infer<typeof CarSchema>;
