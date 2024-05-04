@@ -166,7 +166,7 @@ const AddCarForm = ({isTeam}: {isTeam: boolean}) => {
 
 
 
-  async function saveImages(gallery, newCar, id) {
+ async function saveImages(gallery:any, newCar:any, id:any) {
     try {
         const makeModelYear = `${newCar.make}-${newCar.model}-${newCar.year}`; // Assuming make and model are available
 
