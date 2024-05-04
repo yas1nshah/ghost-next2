@@ -1,5 +1,7 @@
 function formatAmount(amount: number) {
-  if (amount >= 10000000) {
+  if (amount === 0) {
+    return "Not For Sale";
+  } else if (amount >= 10000000) {
     // Amount is 1 Crore or more
     const crorePart = Math.floor(amount / 10000000);
     const remainder = amount % 10000000;
