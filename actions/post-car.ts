@@ -73,6 +73,7 @@ interface UploadResult {
 
 
 export async function saveDocumentInteraction(formData: FormData) {
+    console.log("Got Image")
     const file = formData.get('img') as File;
     const result =  await saveFile(file);
 
