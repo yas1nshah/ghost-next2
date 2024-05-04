@@ -1,0 +1,93 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  ADMIN
+  TEAM
+  USER
+}
+
+model User {
+  id            String    @id @default(uuid()) @db.Uuid
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  accounts      Account[]
+  cars          Car[]
+  address       String?
+
+  role UserRole @default(USER)
+
+  phone          String  @unique
+  dealer         Boolean @default(false)
+  ad_limit       Int     @default(1)
+  featured_limit Int     @default(0)
+
+  date_joined DateTime @default(now())
+}
+
+model Account {
+  id                String  @id @default(uuid()) @db.Uuid
+  userId            String  @db.Uuid
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Car {
+  id             String   @id @default(uuid()) @db.Uuid
+  title          String?
+  date           DateTime @default(now())
+  featured       Boolean  @default(false)
+  gpcar          Boolean  @default(false)
+  gallery        String[]
+  galleryIndex   Int
+  make           String
+  model          String
+  year           Int
+  price          Int
+  location       String
+  mileage        Int
+  transmission   Boolean
+  engine         String
+  engineCapacity String
+  registration   String
+  body           String
+  color          String
+  sellerID       String   @db.Uuid
+  seller         User     @relation(fields: [sellerID], references: [id], onDelete: Cascade)
+  sellerComments String
+
+  active Boolean @default(false)
+  ref String? 
+
+  @@index([make])
+  @@index([model])
+  @@index([year])
+  @@index([title])
+}
+
+model DemandList {
+  id     String   @id @default(uuid()) @db.Uuid
+  demand String
+  date   DateTime @default(now())
+  done   Boolean  @default(false)
+}
