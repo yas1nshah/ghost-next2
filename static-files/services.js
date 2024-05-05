@@ -11,7 +11,7 @@ const services = [
         "subTitle": "REVEALING VEHICLE INSIGHTS",
         "title":"Car Inspection",
         "details":"Discover your car's secrets with our inspections.",
-        "image":"/inspection.webp",
+        "image":"/inspection2.webp",
         "link":"https://wa.me/16232741046"
     },
     {

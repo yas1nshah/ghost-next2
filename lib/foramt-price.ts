@@ -6,17 +6,17 @@ function formatAmount(amount: number) {
     const crorePart = Math.floor(amount / 10000000);
     const remainder = amount % 10000000;
     const lakhPart = remainder >= 100000 ? Math.floor(remainder / 100000) : 0;
-    const formattedAmount = lakhPart > 0 ? `${crorePart},${lakhPart} Crores` : `${crorePart} Crores`;
-    return formattedAmount;
+    const formattedCrorePart = crorePart + (remainder > 0 ? "." + (remainder / 1000000).toFixed(2).slice(2) : ""); // Format crore part with two decimals
+    return `${formattedCrorePart} Crore`;
   } else if (amount >= 100000) {
     // Amount is 1 Lakh or more
     const lakhPart = Math.floor(amount / 100000);
     const remainder = amount % 100000;
-    const formattedAmount = remainder > 0 ? `${lakhPart}.${remainder} Lakh` : `${lakhPart} Lakh`;
-    return formattedAmount;
+    const formattedLakhPart = lakhPart + (remainder > 0 ? "." + (remainder / 1000).toFixed(2).slice(2) : ""); // Format lakh part with two decimals
+    return `${formattedLakhPart} Lakh`;
   } else {
     // Amount is less than 1 Lakh
-    const formattedAmount = Math.floor(amount); // Remove decimal part
+    const formattedAmount = amount.toFixed(2); // Format amount to two decimal places
     return `${formattedAmount} Rupees`;
   }
 }

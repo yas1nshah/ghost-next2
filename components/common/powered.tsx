@@ -37,6 +37,10 @@ const PoweredBy = () => {
         <div className="overflow-clip rounded-xl bg-card h-20 md: w-24 w-1/4 flex items-center justify-center">
           <Image src={'/media/powered/thegarage.jpeg'} height={100} width={100} alt='AutoNation'/>
         </div>
+
+        <div className="overflow-clip rounded-xl bg-card h-20 md: w-24 w-1/4 flex items-center justify-center">
+          <Image src={'/media/powered/nap.jpeg'} height={100} width={100} alt='AutoNation'/>
+        </div>
       </div>
     </div>
   )
