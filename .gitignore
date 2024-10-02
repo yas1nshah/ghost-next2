@@ -1,0 +1,56 @@
+# Node modules
+node_modules/
+.pnp/
+.pnp.js
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules/
+.babelcache.json
+.cache/
+.next/
+dist/
+
+# dotenv environment variables file
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Next.js build output
+.next/
+out/
+
+# Yarn
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# TypeScript
+*.tsbuildinfo
+
+# Static
+static/
+
+# Optional eslint cache
+.eslintcache
+
+# MacOS specific files
+.DS_Store
+
+# Vercel/Netlify
+.vercel/
+netlify.toml
+
+# IDE/editor-specific files
+.vscode/
+.idea/
