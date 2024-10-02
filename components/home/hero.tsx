@@ -88,15 +88,7 @@ function Hero() {
             </div>
 
             <div className="bg-card py-2 px-4 m-2 md:flex justify-between rounded-xl hidden">
-                <p>Premium Picks</p>
-                <p>💀</p>
-                <p>Spectral Savings</p>
-                <p>🔥</p>
-                <p>Ethereal Rides</p>
-                <p>🔥</p>
-                <p>Phantom Deals</p>
-                <p>💀</p>
-                <p>Ghostly Grace</p>
+             <p>STAY READY TO BE AMAZED BY GHOSTS</p>
             </div>
         </div>
     );

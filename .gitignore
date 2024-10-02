@@ -54,3 +54,8 @@ netlify.toml
 # IDE/editor-specific files
 .vscode/
 .idea/
+
+AUTH_SECRET = "UGizo8Ytl5qBt4OQAfjYzQsMUOiy1A5r"
+
+DATABASE_URL = postgres://ghost:123456@localhost:5432/ghostprotocols
+
