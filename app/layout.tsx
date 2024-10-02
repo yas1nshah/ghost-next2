@@ -45,14 +45,14 @@ export default function  RootLayout({
             disableTransitionOnChange
           >
           
-          <Header/>
+
           {/* <Navbar/> */}
           <main className="main">
             {children}
           </main>
           <Toaster />
-          <PoweredBy/>
-          <Footer/>
+
+
         </ThemeProvider>
       </body>
     </html>
